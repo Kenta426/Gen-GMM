@@ -79,9 +79,11 @@ module Inference
         end
 
         args = get_args(trace)
+        cmap = []
         for i in 1:n
-            (trace, w, _, discard) = update(trace, args, (), choicemap((:Cluster=>i=>:c, class_label[i])))
+            push!(cmap, (:Cluster=>i=>:c, class_label[i]))
         end
+        (trace, w, _, discard) = update(trace, args, (), choicemap(tuple(cmap...)...))
         return trace
     end
 
